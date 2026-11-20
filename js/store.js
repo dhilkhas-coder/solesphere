@@ -56,3 +56,5 @@ $("#cf").onsubmit=async e=>{e.preventDefault();const f=e.target.elements,n=f.n.v
 function fit(){const g=document.querySelector(".giant"),f=g.parentElement,cs=getComputedStyle(f);g.style.fontSize="100px";const av=f.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);g.style.fontSize=Math.min(300,100*av/g.offsetWidth)+"px"}
 addEventListener("shop-ready",()=>{for(const[id,f,ch]of[["heroimg","hero.png",0],["aboutimg","about.png",0]]){const im=new Image();im.onload=()=>{const e=document.getElementById(id);if(e)e.innerHTML=(ch?'<span class="chip c1">COMFORT</span>':"")+`<img src="${f}" alt="">`+(ch?'<span class="chip c2">STYLE</span>':"")};im.src=f}});
 load().then(fit).finally(()=>dispatchEvent(new Event("shop-ready")));
+
+addEventListener("shop-ready",()=>{document.getElementById("fs").innerHTML='<option value="">Size (EU)</option>'+[36,37,38,39,40,41,42,43,44,45,46].map(n=>`<option value="${n}">EU ${n}</option>`).join("")});
