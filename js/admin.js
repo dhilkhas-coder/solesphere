@@ -1,4 +1,6 @@
-import {db,auth,storage,fs,au,st} from "./firebase.js";
+import {db,auth,storage,fs,au,st as st0} from "./firebase.js";
+const st={ref:(s,p)=>({p}),uploadBytes:async(r,f)=>{r.f=f},getDownloadURL:r=>shrink(r.f)};
+function shrink(f){return new Promise((ok,no)=>{const u=URL.createObjectURL(f),i=new Image();i.onerror=()=>no(new Error("Could not read photo"));i.onload=()=>{let m=700,d;do{const s=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=Math.round(i.width*s);c.height=Math.round(i.height*s);const x=c.getContext("2d");x.drawImage(i,0,0,c.width,c.height);d=c.toDataURL("image/webp",.8);if(d.startsWith("data:image/png")){x.globalCompositeOperation="destination-over";x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);d=c.toDataURL("image/jpeg",.78)}m-=150}while(d.length>280000&&m>250);URL.revokeObjectURL(u);ok(d)};i.src=u})}
 const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const inr=n=>"₹"+Number(n).toLocaleString("en-IN"),toast=m=>{$("#toast").textContent=m;$("#toast").className="show";setTimeout(()=>$("#toast").className="",2500)};
 const get=async n=>(await fs.getDocs(fs.collection(db,n))).docs.map(d=>({id:d.id,...d.data()}));
