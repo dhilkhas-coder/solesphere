@@ -41,4 +41,4 @@ dialog form,.fld{display:grid;gap:10px}.chips{display:flex;flex-wrap:wrap;gap:6p
 .lb{position:absolute;left:50%;transform:translateX(-50%);width:min(520px,80vw);bottom:max(28px,env(safe-area-inset-bottom));z-index:1;pointer-events:none}.lm{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-bottom:10px}.lm b{font-variant-numeric:tabular-nums}
 .bar{height:3px;background:#ffffff22;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f2efe8,#fff,#f2efe8);background-size:200% 100%;animation:sh 1.6s linear infinite;border-radius:9px}@keyframes sh{to{background-position:-200% 0}}body.ld{overflow:hidden}
 
-#heroimg{background:url(hero.png) center/114% no-repeat}#heroimg>*{display:none}
+#heroimg{background:url(/hero.png) center/114% no-repeat}#heroimg>*{display:none}
