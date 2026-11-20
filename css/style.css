@@ -49,3 +49,5 @@ dialog form,.fld{display:grid;gap:10px}.chips{display:flex;flex-wrap:wrap;gap:6p
 .about .htile > * {
   display: none;
 }
+.tile img{width:100%!important;height:100%!important;object-fit:cover!important}
+
