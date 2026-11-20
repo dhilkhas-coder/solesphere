@@ -42,5 +42,10 @@ dialog form,.fld{display:grid;gap:10px}.chips{display:flex;flex-wrap:wrap;gap:6p
 .bar{height:3px;background:#ffffff22;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f2efe8,#fff,#f2efe8);background-size:200% 100%;animation:sh 1.6s linear infinite;border-radius:9px}@keyframes sh{to{background-position:-200% 0}}body.ld{overflow:hidden}
 
 #heroimg{background:url(/hero.png) center/114% no-repeat}#heroimg>*{display:none}
+.about .htile {
+  background: url('/about.png') center/cover no-repeat;
+}
 
-.about .htile{background:url(/about.png) center/cover no-repeat}.about .htile>*{display:none}
+.about .htile > * {
+  display: none;
+}
