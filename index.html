@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script>try{var t=localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");document.documentElement.dataset.theme=t}catch(e){}</script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SOLESPHERE</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Unbounded:wght@600;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"></head><body>
+<div id="loader"><canvas id="lc"></canvas><div class="lt"><div class="lbrand">SOLESphere<span>.iin</span></div><h1>Catch your next kicks!</h1><p>Tap the falling sneakers!</p></div><div class="lb"><div class="lm"><span>Getting your kicks ready...</span><b id="lpc">0%</b></div><div class="bar"><i id="lp"></i></div></div></div>
+<script>(()=>{const L=document.getElementById("loader"),cv=document.getElementById("lc"),x=cv.getContext("2d"),bar=document.getElementById("lp"),pc=document.getElementById("lpc"),B=document.body;
+B.classList.add("ld");
+let W,H,D,shoes=[],fx=[],spawn=0,last=performance.now(),t0=last,prog=0,fin=false,gone=false;
+const st={dom:document.readyState!="loading",fonts:!document.fonts,load:document.readyState=="complete",data:false};
+addEventListener("DOMContentLoaded",()=>st.dom=true);addEventListener("load",()=>st.load=true);
+document.fonts&&document.fonts.ready.then(()=>st.fonts=true);addEventListener("shop-ready",()=>st.data=true);
+setTimeout(()=>{st.dom=st.fonts=st.load=st.data=true},12000);
+const CW=[{u:["#f7f4ec","#c4beaf"],a:"#0b0b0b"},{u:["#3b3c42","#060608"],a:"#f2efe8"}];
+function rs(){W=innerWidth;H=innerHeight;D=Math.min(devicePixelRatio||1,2);cv.width=W*D;cv.height=H*D;x.setTransform(D,0,0,D,0,0)}
+rs();addEventListener("resize",rs);
+function add(){const d=.62+Math.random()*.38,w=Math.min(135,Math.max(74,W*.2))*d;
+shoes.push({x:w*.7+Math.random()*(W-w*1.4),y:-w,w,d,v:(H*.2+Math.random()*H*.25)*d,r:(Math.random()-.5)*.9,vr:(Math.random()-.5)*.7,sp:.8+Math.random()*1.2,ph:Math.random()*6.3,cw:CW[Math.random()<.5?0:1],k:0,t:0});
+shoes.sort((a,b)=>a.d-b.d)}
+function up(){x.beginPath();x.moveTo(-48,14);x.lineTo(-50,-10);x.quadraticCurveTo(-51,-23,-39,-25);x.lineTo(-27,-26);x.quadraticCurveTo(-21,-26,-18,-19);x.lineTo(-9,-15);x.quadraticCurveTo(6,-12,22,-6);x.quadraticCurveTo(40,-2,48,8);x.quadraticCurveTo(53,13,50,14);x.closePath()}
+function shoe(s){const k=s.k,c=s.cw,ph=s.t*s.sp+s.ph,sc=(k<.25?1+k*1.3:1.33*(1-(k-.25)/.75))*s.w/100;
+x.save();x.translate(s.x,s.y);x.rotate(s.r);x.transform(.62+.38*Math.cos(ph),0,Math.sin(ph)*.18,1,0,0);x.scale(sc,sc);x.globalAlpha=(.55+.45*s.d)*(k>.6?1-(k-.6)/.4:1);
+let g=x.createLinearGradient(0,12,0,26);g.addColorStop(0,"#fffdf7");g.addColorStop(1,"#b9b3a4");x.fillStyle=g;x.beginPath();x.roundRect(-51,12,103,14,7);x.fill();
+x.fillStyle="#0c0c0c";x.beginPath();x.roundRect(-49,23,99,5,2.5);x.fill();
+g=x.createLinearGradient(0,-26,0,14);g.addColorStop(0,c.u[0]);g.addColorStop(1,c.u[1]);x.fillStyle=g;up();x.fill();
+x.save();up();x.clip();x.fillStyle="rgba(0,0,0,.14)";x.beginPath();x.ellipse(45,7,17,14,0,0,7);x.fill();
+x.globalAlpha*=.92;x.fillStyle=c.a;x.beginPath();x.moveTo(-52,-26);x.lineTo(-30,-26);x.quadraticCurveTo(-35,-4,-26,14);x.lineTo(-52,14);x.fill();
+x.beginPath();x.moveTo(-30,5);x.quadraticCurveTo(-8,-3,16,8);x.quadraticCurveTo(-8,7,-30,12);x.fill();x.globalAlpha/=.92;
+g=x.createLinearGradient(0,-26,0,14);g.addColorStop(0,"rgba(255,255,255,.4)");g.addColorStop(.45,"rgba(255,255,255,0)");g.addColorStop(1,"rgba(0,0,0,.4)");x.fillStyle=g;x.fillRect(-55,-30,112,50);x.restore();
+x.fillStyle=c.u[0];x.strokeStyle="rgba(0,0,0,.3)";x.lineWidth=1;x.beginPath();x.moveTo(-19,-19);x.lineTo(-14,-34);x.quadraticCurveTo(-8,-37,-4,-31);x.lineTo(-1,-14);x.closePath();x.fill();x.stroke();
+x.strokeStyle=c.a;x.lineWidth=2.4;x.lineCap="round";for(let i=0;i<4;i++){const px=-8+i*8,py=-17+i*3.6;x.beginPath();x.moveTo(px-2,py-4);x.lineTo(px+3,py+3);x.stroke()}
+x.restore()}
+function hit(px,py){for(let i=shoes.length-1;i>=0;i--){const s=shoes[i];if(!s.k&&Math.hypot(px-s.x,py-s.y)<s.w*.62){s.k=.01;fx.push({x:s.x,y:s.y,l:.6,R:s.w});for(let j=0;j<9;j++){const a=Math.PI*2*j/9;fx.push({x:s.x,y:s.y,vx:Math.cos(a)*(80+s.w),vy:Math.sin(a)*(80+s.w),l:.55})}return}}
+fx.push({x:px,y:py,l:.35,R:26})}
+cv.addEventListener("pointerdown",e=>hit(e.clientX,e.clientY));
+cv.addEventListener("pointermove",e=>{cv.style.cursor=shoes.some(s=>!s.k&&Math.hypot(e.clientX-s.x,e.clientY-s.y)<s.w*.62)?"pointer":"default"});
+function finish(){fin=true;bar.style.width="100%";pc.textContent="100%";setTimeout(()=>{L.classList.add("out");B.classList.remove("ld")},400);setTimeout(()=>{gone=true;L.remove()},1300)}
+function frame(now){if(gone)return;const dt=Math.min(.05,(now-last)/1e3);last=now;const t=(now-t0)/1e3;
+if(!fin){spawn-=dt;if(spawn<=0&&shoes.length<9){add();spawn=.45+Math.random()*.6}}
+x.clearRect(0,0,W,H);
+shoes=shoes.filter(s=>{s.y+=s.v*dt*(s.k?.25:1);s.r+=s.vr*dt;s.t=t;if(s.k)s.k+=dt*2.2;if(s.k>=1||s.y>H+130)return false;shoe(s);return true});
+fx=fx.filter(p=>{p.l-=dt;if(p.l<=0)return false;x.globalAlpha=Math.min(1,p.l*2);if(p.R){const r=p.R*(1.6-p.l*1.2);x.strokeStyle="#f2efe8";x.lineWidth=2;x.beginPath();x.arc(p.x,p.y,r,0,7);x.stroke()}else{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;x.fillStyle="#f2efe8";x.beginPath();x.arc(p.x,p.y,2.2,0,7);x.fill()}x.globalAlpha=1;return true});
+if(!fin){const tg=.05+.1*st.dom+.2*st.fonts+.25*st.load+.4*st.data;prog+=(tg-prog)*Math.min(1,dt*2.5);
+bar.style.width=prog*100+"%";pc.textContent=Math.min(99,Math.round(prog*100))+"%";
+if(tg>=1&&prog>.985&&now-t0>2200)finish()}
+requestAnimationFrame(frame)}
+requestAnimationFrame(frame)})();
+</script>
+
+<header class="nav"><a class="logo" href="#" data-s="storeName">SOLESPHERE</a><nav><a href="#shop" data-f="Men">Men</a><a href="#shop" data-f="Women">Women</a><a href="#shop" data-f="new">New</a><a href="#shop" data-f="best">Best Sellers</a><a href="#about">About</a><a href="#contact">Contact</a></nav><button class="tg" id="tg" aria-label="Switch theme">☾</button><button class="btn" id="cartBtn">Cart <span id="cc">0</span></button></header>
+<section class="sec hero"><div><h1>Walk in comfort</h1><p>Cushioned soles and premium quality, designed for every step. Order straight on WhatsApp.</p><a class="btn" href="#shop" data-f="Men">Shop Men's</a><a class="btn o" href="#shop" data-f="Women">Shop Women's</a><div class="bars"></div><div class="code">NEW SEASON · 10A &amp; UA QUALITY</div></div><div class="htile" id="heroimg"><span class="chip c1">COMFORT</span><div class="big">👟</div><span class="chip c2">STYLE</span></div></section>
+<section class="sec"><h2>Collections</h2><div class="cats"><a href="#shop" data-f="Men">Men's Shoes <span>↗</span></a><a href="#shop" data-f="Women">Women's Shoes <span>↗</span></a><a href="#shop" data-f="new">New Arrivals <span>↗</span></a><a href="#shop" data-f="best">Best Sellers <span>↗</span></a></div></section>
+<section class="sec" id="shop"><h2>Our products</h2><div class="filters"><input id="fq" placeholder="Search shoes…"><select id="fc"><option value="">All</option><option>Men</option><option>Women</option></select><select id="fu"><option value="">Quality</option></select><select id="fs"><option value="">Size</option></select><input id="fp" type="number" placeholder="Max ₹" style="width:110px"><button class="btn o s" id="clr">Clear</button></div>
+<div class="grid" id="grid"><div class="load">Loading shoes…</div></div>
+</section>
+<section class="sec about" id="about"><div><h2>About us</h2><p>Welcome to our footwear haven, where style blends with comfort. Every pair is picked for lasting quality, so every stride feels good.</p><a class="btn" href="#shop">Shop now</a></div><div class="htile" style="aspect-ratio:4/3"><div class="big">👟</div></div></section>
+<section class="sec promo"><h2>Festive offer</h2><p>Extra savings on selected styles. Check the crossed-out prices.</p><a class="btn" href="#shop">View offers</a></section>
+<footer id="contact"><div class="wrap"><div><b data-s="storeName">SOLESPHERE</b><p id="fa"></p></div><div><b>Contact</b><p id="fct"></p></div><div><b>Follow</b><p><a id="fw" target="_blank">WhatsApp</a> · <a id="fi" target="_blank">Instagram</a></p></div><div><b>Links</b><p><a href="#shop">Shop</a> · <a href="admin.html">Admin</a></p></div></div><div class="giant" data-s="storeName">SOLESPHERE</div></footer>
+<a class="fab wa" id="wa" href="https://wa.me/917510266903" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M12.04 2a9.9 9.9 0 0 0-8.45 15.05L2 22l5.1-1.34A9.9 9.9 0 1 0 12.04 2zm5.8 14.1c-.25.7-1.45 1.33-2 1.4-.52.08-1.17.1-1.88-.12a17 17 0 0 1-1.7-.63c-3-1.3-4.95-4.3-5.1-4.5-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.6-.37.8-.37h.57c.18 0 .43-.07.67.5.25.6.85 2.07.93 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.32.38-.45.5-.15.15-.3.3-.13.6.17.3.77 1.27 1.65 2.05 1.13 1 2.08 1.32 2.38 1.47.3.15.47.12.65-.07.17-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.27.1 1.72.8 2.02.95.3.15.5.22.57.35.08.12.08.72-.17 1.42z"/></svg></a><a class="fab ig" id="ig" href="https://instagram.com/solesphere.iin" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg></a>
+<dialog id="dlg"></dialog>
+<aside id="cart"><h3>Your Cart <button class="btn o s" id="cx">✕</button></h3><div id="items"></div><h3 id="tot"></h3><button class="btn" id="co">Checkout on WhatsApp</button></aside>
+<dialog id="cod"><form id="cf"><h3>Delivery details</h3><input name="n" placeholder="Full name"><input name="p" placeholder="WhatsApp / mobile number" inputmode="tel"><textarea name="a" rows="3" placeholder="Delivery address"></textarea><div class="err" id="ce"></div><button class="btn">Place order on WhatsApp</button><button type="button" class="btn o" onclick="cod.close()">Cancel</button></form></dialog>
+<div id="toast"></div><script type="module" src="js/store.js"></script></body></html>

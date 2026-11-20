@@ -1,0 +1,5 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script>try{document.documentElement.dataset.theme=localStorage.getItem("theme")||""}catch(e){}</script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title><link rel="stylesheet" href="css/style.css"></head><body>
+<div id="login" class="admin" style="max-width:380px;margin-top:12vh"><h2>Admin Login</h2><form id="lf" class="fld"><input name="e" type="email" placeholder="Email" required><input name="p" type="password" placeholder="Password" required><div class="err" id="err"></div><button class="btn">Sign in</button></form><p><a href="index.html">← Back to store</a></p></div>
+<div id="app" class="admin" hidden><div class="nav" style="position:static;padding:0 0 12px"><b class="logo">Admin</b><button class="btn o s" id="out" style="margin-left:auto">Sign out</button></div>
+<div class="tabs" id="tabs"></div><div id="view"></div></div>
+<dialog id="pd"><form id="pf"></form></dialog><div id="toast"></div><script type="module" src="js/admin.js"></script></body></html>
