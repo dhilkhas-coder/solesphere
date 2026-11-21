@@ -58,3 +58,9 @@ addEventListener("shop-ready",()=>{for(const[id,f,ch]of[["heroimg","hero.png",0]
 load().then(fit).finally(()=>dispatchEvent(new Event("shop-ready")));
 
 addEventListener("shop-ready",()=>{document.getElementById("fs").innerHTML='<option value="">Size (EU)</option>'+[36,37,38,39,40,41,42,43,44,45,46].map(n=>`<option value="${n}">EU ${n}</option>`).join("")});
+const ord=(a,b)=>{const x=a.rank,y=b.rank;return x==null&&y==null?(b.created||0)-(a.created||0):x==null?-1:y==null?1:x-y};
+let shown=15;const vm=document.createElement("div");vm.style.cssText="text-align:center;margin-top:22px";vm.innerHTML='<button class="btn" id="vmb"></button>';document.getElementById("grid").after(vm);
+function pg(){const c=[...document.querySelectorAll("#grid .card")];c.forEach((e,i)=>e.style.display=i<shown?"":"none");const r=c.length-shown;vm.style.display=r>0?"":"none";document.getElementById("vmb").textContent="View more shoes ("+r+" more)"}
+new MutationObserver(()=>{shown=15;pg()}).observe(document.getElementById("grid"),{childList:true});
+document.getElementById("vmb").onclick=()=>{shown+=15;pg()};
+addEventListener("shop-ready",()=>{P.sort(ord);draw()});
